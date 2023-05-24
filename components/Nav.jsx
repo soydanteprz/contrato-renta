@@ -22,7 +22,7 @@ const Nav = () => {
         <nav className="flex-between w-full mb-16 pt-3">
             <Link href="/" className="flex gap-2 flex-center">
                 <Image
-                    src="/assets/logo.jpg"
+                    src="/assets/logo.png"
                     alt="logo"
                     width={50}
                     height={50}
@@ -35,8 +35,11 @@ const Nav = () => {
             <div className="sm:flex hidden">
                 {session?.user ? (
                     <div className="flex gap-3 md:gap-5">
-                        <Link href="/create-prompt" className="black_btn">
-                            Create Post
+                        <Link href="/crear-contrato" className="black_btn">
+                            Crear Contrato
+                        </Link>
+                        <Link href="ver-contrato" className="green_btn">
+                            Ver Contrato
                         </Link>
                         <button
                             type="button"
@@ -95,11 +98,11 @@ const Nav = () => {
                                     My Profile
                                 </Link>
                                 <Link
-                                    href="/create-prompt"
+                                    href="/crear-contrato"
                                     className="dropdown_link"
                                     onClick={() => setToggleDropdown(false)}
                                 >
-                                    Create Prompt
+                                    Crear Contrato
                                 </Link>
                                 <button
                                     type="button"

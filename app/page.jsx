@@ -4,7 +4,7 @@ const Home = () => {
             <h1 className="head_text text-center">
                 RentXpert
                 <br className="max-md:hidden" />
-                <span className="orange_gradient text-center">
+                <span className="purple_gradient text-center">
                     Contrato Rentas
                 </span>
             </h1>
