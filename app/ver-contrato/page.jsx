@@ -1,5 +1,7 @@
 "use client";
 
+import PDFfile from "@components/PDFfile";
+import { PDFDownloadLink, PDFRenderer, PDFViewer } from "@react-pdf/renderer";
 import React from "react";
 import { useState, useEffect } from "react";
 
@@ -47,7 +49,23 @@ const VerContrato = () => {
                         </h3>
                         <h3 className="text-lg font-semibold">
                             End Date: {contrato.FechaFin}
-                        </h3>
+                        </h3>                        
+                        <PDFDownloadLink 
+                            document={<PDFfile contrato={contrato} />}
+                            fileName="contrato.pdf"
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                            type="button"
+                        >
+                            {({ blob, url, loading, error }) =>
+                                (loading ? <button>Loading document...</button> : <button>Download now!</button>)
+                            }
+                        </PDFDownloadLink>
+
+                        <PDFViewer width="100%" height="600px">
+                            <PDFfile contrato={contrato} />
+                        </PDFViewer>
+
+
                     </div>
                 ))}
             </div>
@@ -56,41 +74,3 @@ const VerContrato = () => {
 };
 
 export default VerContrato;
-
-//     const getCharacters = async () => {
-//         setLoading(true);
-//         try {
-//             const res = await fetch("https://rickandmortyapi.com/api/character");
-//             const data = await res.json();
-//             setData(data.results);
-//         } catch (error) {
-//             setError(error);
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     useEffect(() => {
-//         getCharacters();
-//     }
-//         , []);
-
-//     if (loading) return <p>Loading...</p>;
-//     if (error) return <p>Error!</p>;
-
-//     return (
-//         <div>
-//             <h1>Ver Contrato</h1>
-//             <div className="grid grid-cols-3 gap-4">
-//                 {data?.map((character) => (
-//                     <div key={character.id}>
-//                         <h3>{character.name}</h3>
-//                         <img src={character.image} alt={character.name} />
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default VerContrato;
