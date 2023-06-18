@@ -8,6 +8,44 @@ import {
 } from "@react-pdf/renderer";
 import React from "react";
 
+const Recibo = ({
+    pageNumber,
+    FechaInicio,
+    sexoArrendatario,
+    nombreArrendatario,
+    direccionArrendatario,
+}) => {
+    const date = new Date(FechaInicio);
+    const month = date.toLocaleString("es-MX", { month: "long" });
+    const year = date.getFullYear();
+
+    return (
+        <>
+            <Text style={styles.number}>{pageNumber}</Text>
+            <Text style={styles.recibo}>RECIBO DE ARRENDAMIENTO</Text>
+            <Text style={styles.fecha}>
+                {" "}
+                Querétaro, Qro. {date.getDate()} de {month} del {year}
+            </Text>
+            <Text style={styles.reciboText}>
+                Recibí de{" "}
+                {sexoArrendatario === "Masculino" ? "el C. " : "la C. "}{" "}
+                {nombreArrendatario} la cantidad de{" "}
+                <Text style={styles.textBold}>
+                    $5, 000.00 (CINCO MIL PESOS 00/100 M.N.)
+                </Text>{" "}
+                por concepto de renta del inmueble ubicado en{" "}
+                <Text style={styles.textBold}>{direccionArrendatario}</Text>{" "}
+                correspondiente al mes de{" "}
+                <Text style={styles.textBold}>
+                    {" "}
+                    {month.toUpperCase()} del {year}
+                </Text>
+            </Text>
+        </>
+    );
+};
+
 // Create styles
 const styles = StyleSheet.create({
     page: {
@@ -101,6 +139,31 @@ const styles = StyleSheet.create({
         fontWeight: "heavy",
         fontFamily: "Times-Bold",
     },
+    number: {
+        fontWeight: "heavy",
+        fontFamily: "Times-Bold",
+        textAlign: "right",
+        marginRight: 25,
+    },
+    recibo: {
+        fontWeight: "heavy",
+        fontFamily: "Times-Bold",
+        textAlign: "center",
+        paddingBottom: 15,
+        fontSize: 20,
+    },
+    reciboText: {
+        paddingBottom: 30,
+        textAlign: "justify",
+        marginLeft: 25,
+        marginRight: 25,
+        fontSize: 18,
+    },
+    fecha: {
+        textAlign: "right",
+        paddingBottom: 15,
+        marginRight: 25,
+    },
 });
 
 // Create Document Component
@@ -177,17 +240,30 @@ const PDFfile = ({ contrato }) => (
                 <Text style={styles.clausulas}>CLÁUSULAS</Text>
                 <Text style={styles.normalText}>
                     PRIMERA.- El Arrendador da en arrendamiento el inmueble
-                    ubicado en <Text style={styles.textBold}> {contrato.direccionArrendatario} </Text>
+                    ubicado en{" "}
+                    <Text style={styles.textBold}>
+                        {" "}
+                        {contrato.direccionArrendatario}{" "}
+                    </Text>
                 </Text>
                 <Text style={styles.normalText}>
                     SEGUNDA.- El arrendatario pagara por concepto de renta la
-                    cantidad de <Text style={styles.textBold}>$5, 000.00 (CINCO MIL PESOS 00/100 M.N.) </Text>
-                    mensuales, la cual será pagada por mes cumplido, <Text style={styles.textBold}>el día 1
-                    (PRIMERO) de cada mes;</Text> debiendo llevar a cabo el <Text style={styles.textBold}>PAGO EN
-                    EFECTIVO</Text> de dicha RENTA, en el domicilio particular de la
-                    ARRENDADORA, <Text style={styles.textBold}>ubicado en CALLE HACIENDA DE LOS REYES NÚMERO
-                    143 CIENTO CUARENTA Y TRES, EN EL FRACCIONAMIENTO LAS
-                    TERESAS DE ESTA CIUDAD.</Text>
+                    cantidad de{" "}
+                    <Text style={styles.textBold}>
+                        $5, 000.00 (CINCO MIL PESOS 00/100 M.N.){" "}
+                    </Text>
+                    mensuales, la cual será pagada por mes cumplido,{" "}
+                    <Text style={styles.textBold}>
+                        el día 1 (PRIMERO) de cada mes;
+                    </Text>{" "}
+                    debiendo llevar a cabo el{" "}
+                    <Text style={styles.textBold}>PAGO EN EFECTIVO</Text> de
+                    dicha RENTA, en el domicilio particular de la ARRENDADORA,{" "}
+                    <Text style={styles.textBold}>
+                        ubicado en CALLE HACIENDA DE LOS REYES NÚMERO 143 CIENTO
+                        CUARENTA Y TRES, EN EL FRACCIONAMIENTO LAS TERESAS DE
+                        ESTA CIUDAD.
+                    </Text>
                 </Text>
                 <Text style={styles.normalText}>
                     TERCERA.- El presente contrato de arrendamiento tendrá una
@@ -201,9 +277,11 @@ const PDFfile = ({ contrato }) => (
                     CUARTA.- El Arrendatario destinara el objeto materia del
                     presente contrato, únicamente para uso de CASA HABITACIÓN,
                     quedándole estrictamente prohibido destinarlo para cualquier
-                    otro fin, estando <Text style={styles.textBold}>ESTRICTAMENTE PROHIBIDO</Text> el ingreso de
-                    cualquier MASCOTA o ANIMAL a dicho inmueble, siendo esta
-                    causa especial de rescisión del presente contrato.
+                    otro fin, estando{" "}
+                    <Text style={styles.textBold}>ESTRICTAMENTE PROHIBIDO</Text>{" "}
+                    el ingreso de cualquier MASCOTA o ANIMAL a dicho inmueble,
+                    siendo esta causa especial de rescisión del presente
+                    contrato.
                 </Text>
                 <Text style={styles.normalText}>
                     QUINTA.- En caso de que el Arrendatario quisiera seguir
@@ -272,18 +350,19 @@ const PDFfile = ({ contrato }) => (
                     importe de los recibos por derecho del servicio de luz,
                     agua, siendo que el Arrendador Autoriza para que realice los
                     respectivos contrato de dichos servicio, así el derecho de
-                    </Text>
+                </Text>
             </View>
         </Page>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
-                <Text style={styles.normalText}>realice los
-                    respectivos contrato de dichos servicio, así el derecho de
-                    Televisión por Cable si este se llegara a contratar por el
-                    Arrendatario, y aquellos otros servicios que fuesen
-                    contratados por el Arrendatario, comprometiéndose a entregar
-                    los recibos del pago respectivo de cada servicio, respecto
-                    del mes inmediato anterior al mes vencido; al arrendador.
+                <Text style={styles.normalText}>
+                    realice los respectivos contrato de dichos servicio, así el
+                    derecho de Televisión por Cable si este se llegara a
+                    contratar por el Arrendatario, y aquellos otros servicios
+                    que fuesen contratados por el Arrendatario, comprometiéndose
+                    a entregar los recibos del pago respectivo de cada servicio,
+                    respecto del mes inmediato anterior al mes vencido; al
+                    arrendador.
                 </Text>
                 <Text style={styles.normalText}>
                     DÉCIMA TERCERA.- El Arrendador no se responsabiliza por la
@@ -304,26 +383,34 @@ const PDFfile = ({ contrato }) => (
                     obligaciones que contrae la arrendataria y las reconoce como
                     propias,{" "}
                     <Text style={styles.textBold}>
-                    {contrato.sexoAval === "Masculino"
-                        ? "a el C. "
-                        : "a la C. "}{" "}
-                    {contrato.nombreAval}</Text> se constituye ante está obligación como
-                    FIADOR de la ARRENDATARIO. Ésta última señala como su
-                    domicilio para oír y recibir todo tipo de notificaciones y
-                    documentos el ubicado en <Text style={styles.textBold}>{contrato.direccionAval}</Text>
+                        {contrato.sexoAval === "Masculino"
+                            ? "a el C. "
+                            : "a la C. "}{" "}
+                        {contrato.nombreAval}
+                    </Text>{" "}
+                    se constituye ante está obligación como FIADOR de la
+                    ARRENDATARIO. Ésta última señala como su domicilio para oír
+                    y recibir todo tipo de notificaciones y documentos el
+                    ubicado en{" "}
+                    <Text style={styles.textBold}>
+                        {contrato.direccionAval}
+                    </Text>
                 </Text>
                 <Text style={styles.normalText}>
                     DÉCIMA SEXTA.- De igual manera a fin de garantizar el pago
                     de cualquier daño que pudiere causarse en el inmueble
                     materia del presente contrato; la arrendataria entrega por
-                    concepto de depósito a la Arrendadora; la cantidad de <Text style={styles.textBold}>$ 5,
-                    000.00 (CINCO MIL PESOS 00/100 M.N.),</Text> cantidad equivalente a
-                    UN MES DE RENTA; a fin de garantizar la entrega del
-                    multicitado inmueble en las mismas condiciones en que fue
-                    recibido y sin adeudo de servicio contratado alguno,
-                    respecto del predio aludido; cantidad que le será devuelta a
-                    la terminación del presente instrumento y en caso de que se
-                    cumpla con lo establecido en el presente documento.
+                    concepto de depósito a la Arrendadora; la cantidad de{" "}
+                    <Text style={styles.textBold}>
+                        $ 5, 000.00 (CINCO MIL PESOS 00/100 M.N.),
+                    </Text>{" "}
+                    cantidad equivalente a UN MES DE RENTA; a fin de garantizar
+                    la entrega del multicitado inmueble en las mismas
+                    condiciones en que fue recibido y sin adeudo de servicio
+                    contratado alguno, respecto del predio aludido; cantidad que
+                    le será devuelta a la terminación del presente instrumento y
+                    en caso de que se cumpla con lo establecido en el presente
+                    documento.
                 </Text>
                 <Text style={styles.normalText}>
                     DÉCIMA SÉPTIMA: Las partes que intervienen en el presente
@@ -331,7 +418,7 @@ const PDFfile = ({ contrato }) => (
                     Ciudad de Querétaro, Querétaro; en todo lo relacionado al
                     cumplimiento del mismo.
                 </Text>
-                </View>
+            </View>
         </Page>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
@@ -339,21 +426,29 @@ const PDFfile = ({ contrato }) => (
                     DECIMO OCTAVA.- Las partes señalan como sus domicilios para
                     oír y recibir cualquier tipo de notificaciones,
                     emplazamientos, o recibir documentos los siguientes:
+                </Text>
+                <Text style={styles.normalText}>
+                    EL ARRENDADOR:{" "}
+                    <Text style={styles.textBold}>
+                        CALLE HACIENDA DE LOS REYES NÚMERO 143 CIENTO CUARENTA Y
+                        TRES, EN EL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD.
                     </Text>
-                    <Text style={styles.normalText}>EL
-                    ARRENDADOR: <Text style={styles.textBold}>CALLE HACIENDA DE LOS REYES NÚMERO 143 CIENTO
-                    CUARENTA Y TRES, EN EL FRACCIONAMIENTO LAS TERESAS DE ESTA
-                    CIUDAD.</Text> 
+                </Text>
+                <Text style={styles.normalText}>
+                    EL ARRENDATARIO:{" "}
+                    <Text style={styles.textBold}>
+                        {contrato.direccionArrendatario}
                     </Text>
-                    <Text style={styles.normalText}>EL ARRENDATARIO: <Text style={styles.textBold}>{contrato.direccionArrendatario}</Text>
-                    </Text>
+                </Text>
                 <Text style={styles.normalText}>
                     DÉCIMA NOVENA- Leído por ambas partes el presente contrato
-                    lo firman de conformidad, al <Text style={styles.textBold}>01 (PRIMER) día del mes de
-                    DICIEMBRE del año 2023;</Text> en la ciudad de Querétaro Qro.,
-                    manifestando que no existió dolo, violencia, lesión, o
-                    algún otro tipo de vicio en el consentimiento en la
-                    realización del mismo.
+                    lo firman de conformidad, al{" "}
+                    <Text style={styles.textBold}>
+                        01 (PRIMER) día del mes de DICIEMBRE del año 2023;
+                    </Text>{" "}
+                    en la ciudad de Querétaro Qro., manifestando que no existió
+                    dolo, violencia, lesión, o algún otro tipo de vicio en el
+                    consentimiento en la realización del mismo.
                 </Text>
                 <Text style={styles.normalText}>
                     VIGÉSIMA.- En caso de incumplimiento de alguna de las
@@ -364,14 +459,106 @@ const PDFfile = ({ contrato }) => (
                 {/* field to sign */}
                 <Text style={styles.signature}>
                     _____________________________________
-                    </Text>
-                    <Text style={styles.signatureText}>C. Zoila Refugio Vasquez Ramirez</Text>
+                </Text>
+                <Text style={styles.signatureText}>
+                    C. Zoila Refugio Vasquez Ramirez
+                </Text>
                 <Text style={styles.signature}>
-                _____________________________________                    </Text>
-                    <Text style={styles.signatureText}>C. {contrato.nombreArrendatario}</Text>
+                    _____________________________________{" "}
+                </Text>
+                <Text style={styles.signatureText}>
+                    C. {contrato.nombreArrendatario}
+                </Text>
                 <Text style={styles.signature}>
-                _____________________________________                    </Text>
-                    <Text style={styles.signatureText}>C. {contrato.nombreAval}</Text>
+                    _____________________________________{" "}
+                </Text>
+                <Text style={styles.signatureText}>
+                    C. {contrato.nombreAval}
+                </Text>
+            </View>
+        </Page>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Recibo
+                    pageNumber="1-6"
+                    FechaInicio={contrato.FechaInicio}
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
+                <Recibo
+                    pageNumber="2-6"
+                    FechaInicio={
+                        new Date(
+                            new Date(contrato.FechaInicio).setMonth(
+                                new Date(contrato.FechaInicio).getMonth() + 1
+                            )
+                        )
+                    }
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
+            </View>
+        </Page>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Recibo
+                    pageNumber="3-6"
+                    FechaInicio={
+                        new Date(
+                            new Date(contrato.FechaInicio).setMonth(
+                                new Date(contrato.FechaInicio).getMonth() + 2
+                            )
+                        )
+                    }
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
+                <Recibo
+                    pageNumber="4-6"
+                    FechaInicio={
+                        new Date(
+                            new Date(contrato.FechaInicio).setMonth(
+                                new Date(contrato.FechaInicio).getMonth() + 3
+                            )
+                        )
+                    }
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
+            </View>
+        </Page>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Recibo
+                    pageNumber="5-6"
+                    FechaInicio={
+                        new Date(
+                            new Date(contrato.FechaInicio).setMonth(
+                                new Date(contrato.FechaInicio).getMonth() + 4
+                            )
+                        )
+                    }
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
+                <Recibo
+                    pageNumber="6-6"
+                    FechaInicio={
+                        new Date(
+                            new Date(contrato.FechaInicio).setMonth(
+                                new Date(contrato.FechaInicio).getMonth() + 5
+                            )
+                        )
+                    }
+                    sexoArrendatario={contrato.sexoArrendatario}
+                    nombreArrendatario={contrato.nombreArrendatario}
+                    direccionArrendatario={contrato.direccionArrendatario}
+                />
             </View>
         </Page>
     </Document>
