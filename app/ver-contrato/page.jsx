@@ -31,17 +31,13 @@ const VerContrato = () => {
                         className="bg-gray-100 p-4 rounded-lg shadow-md"
                     >
                         <h3 className="text-xl font-bold mb-2">
-                            {contrato.nombreRentador}
+                            {contrato.nombreArrendatario}
                         </h3>
-                        <h3 className="text-xl font-bold mb-2">
-                            {contrato.apellidoRentador}
+                        <h3 className="mb-2">
+                            {contrato.direccionArrendatario}
                         </h3>
-                        <h3 className="mb-2">{contrato.direccionRentador}</h3>
                         <h3 className="text-xl font-bold mb-2">
                             {contrato.nombreAval}
-                        </h3>
-                        <h3 className="text-xl font-bold mb-2">
-                            {contrato.apellidoAval}
                         </h3>
                         <h3 className="mb-2">{contrato.direccionAval}</h3>
                         <h3 className="text-lg font-semibold mb-2">
@@ -49,23 +45,31 @@ const VerContrato = () => {
                         </h3>
                         <h3 className="text-lg font-semibold">
                             End Date: {contrato.FechaFin}
-                        </h3>                        
-                        <PDFDownloadLink 
+                        </h3>
+                        <h3 className="text-lg font-semibold">
+                            Arrendatario: {contrato.sexoArrendatario}
+                        </h3>
+                        <h3 className="text-lg font-semibold">
+                            Aval: {contrato.sexoAval}
+                        </h3>
+                        <PDFDownloadLink
                             document={<PDFfile contrato={contrato} />}
                             fileName="contrato.pdf"
                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                             type="button"
                         >
                             {({ blob, url, loading, error }) =>
-                                (loading ? <button>Loading document...</button> : <button>Download now!</button>)
+                                loading ? (
+                                    <button>Loading document...</button>
+                                ) : (
+                                    <button>Download now!</button>
+                                )
                             }
                         </PDFDownloadLink>
 
                         <PDFViewer width="100%" height="600px">
                             <PDFfile contrato={contrato} />
                         </PDFViewer>
-
-
                     </div>
                 ))}
             </div>

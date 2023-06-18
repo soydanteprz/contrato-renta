@@ -14,14 +14,14 @@ const CrearContrato = () => {
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
-    nombreRentador: "",
-    apellidoRentador: "",
-    direccionRentador: "",
+    nombreArrendatario: "",
+    direccionArrendatario: "",
     nombreAval: "",
-    apellidoAval: "",
     direccionAval: "",
     FechaInicio: "",
     FechaFin: "", // must be 6 months after FechaInicio
+    sexoArrendatario: "",
+    sexoAval: "",
 
   });
 
@@ -33,14 +33,14 @@ const CrearContrato = () => {
       const res = await fetch("/api/contratos/new", {
         method: "POST",
         body: JSON.stringify({
-          nombreRentador: post.nombreRentador,
-          apellidoRentador: post.apellidoRentador,
-          direccionRentador: post.direccionRentador,
+          nombreArrendatario: post.nombreArrendatario,
+          direccionArrendatario: post.direccionArrendatario,
           nombreAval: post.nombreAval,
-          apellidoAval: post.apellidoAval,
           direccionAval: post.direccionAval,
           FechaInicio: post.FechaInicio,
           FechaFin: post.FechaFin,
+          sexoArrendatario: post.sexoArrendatario,
+          sexoAval: post.sexoAval,
           userId: session?.user.id,
         }),
       });

@@ -20,52 +20,70 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             >
                 <div className="flex flex-col gap-3">
                     <label className="font-satoshi font-semibold text-base text-gray-700">
-                        Nombre del Rentador
+                        Nombre del Arrendatario
                     </label>
                     <input
                         type="text"
-                        name="nombreRentador"
-                        id="nombreRentador"
-                        value={post.nombreRentador}
-                        onChange={(e) =>
-                            setPost({ ...post, nombreRentador: e.target.value })
-                        }
-                        className="form_input"
-                    />
-
-                    <label className="font-satoshi font-semibold text-base text-gray-700">
-                        Apellido del Rentador
-                    </label>
-                    <input
-                        type="text"
-                        name="apellidoRentador"
-                        id="apellidoRentador"
-                        value={post.apellidoRentador}
+                        name="nombreArrendatario"
+                        id="nombreArrendatario"
+                        value={post.nombreArrendatario}
                         onChange={(e) =>
                             setPost({
                                 ...post,
-                                apellidoRentador: e.target.value,
+                                nombreArrendatario: e.target.value,
                             })
                         }
                         className="form_input"
                     />
 
                     <label className="font-satoshi font-semibold text-base text-gray-700">
-                        Direccion del Rentador
+                        Direccion del Arrendatario
                     </label>
-                    <input
-                        type="text"
-                        name="direccionRentador"
-                        id="direccionRentador"
-                        value={post.direccionRentador}
+                    <select
+                        name="direccionArrendatario"
+                        id="direccionArrendatario"
+                        value={post.direccionArrendatario}
                         onChange={(e) =>
                             setPost({
                                 ...post,
-                                direccionRentador: e.target.value,
+                                direccionArrendatario: e.target.value,
                             })
                         }
                         className="form_input"
-                    />
+                    >
+                        <option>
+                            CALLE HACIENDA TEQUISQUIAPAN NÚMERO 127 INTERIOR B,
+                            DEL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD DE
+                            QUERETARO.
+                        </option>
+                        <option>
+                            CALLE HACIENDA TEQUISQUIAPAN NÚMERO 127 INTERIOR C,
+                            DEL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD DE
+                            QUERETARO.
+                        </option>
+                        <option>
+                            lol
+                        </option>
+                    </select>
+
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Sexo del Arrendatario
+                    </label>
+                    <select
+                        name="sexoArrendatario"
+                        id="sexoArrendatario"
+                        value={post.sexoArrendatario}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                sexoArrendatario: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    >
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
 
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Aval
@@ -77,20 +95,6 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         value={post.nombreAval}
                         onChange={(e) =>
                             setPost({ ...post, nombreAval: e.target.value })
-                        }
-                        className="form_input"
-                    />
-
-                    <label className="font-satoshi font-semibold text-base text-gray-700">
-                        Apellido del Aval
-                    </label>
-                    <input
-                        type="text"
-                        name="apellidoAval"
-                        id="apellidoAval"
-                        value={post.apellidoAval}
-                        onChange={(e) =>
-                            setPost({ ...post, apellidoAval: e.target.value })
                         }
                         className="form_input"
                     />
@@ -136,6 +140,25 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         }
                         className="form_input"
                     />
+
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Sexo del Aval
+                    </label>
+                    <select
+                        name="sexoAval"
+                        id="sexoAval"
+                        value={post.sexoAval}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                sexoAval: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    >
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
 
                     <div className="flex-end mx-3 mb-5 gap-3">
                         <Link
