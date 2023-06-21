@@ -444,7 +444,7 @@ const PDFfile = ({ contrato }) => (
                     DÉCIMA NOVENA- Leído por ambas partes el presente contrato
                     lo firman de conformidad, al{" "}
                     <Text style={styles.textBold}>
-                        01 (PRIMER) día del mes de DICIEMBRE del año 2023;
+                        {" "} {new Date(contrato.FechaInicio).getDate()} de{" "} {new Date(contrato.FechaInicio).toLocaleString("es-MX", { month: "long" })} del{" "} {new Date(contrato.FechaInicio).getFullYear()}
                     </Text>{" "}
                     en la ciudad de Querétaro Qro., manifestando que no existió
                     dolo, violencia, lesión, o algún otro tipo de vicio en el

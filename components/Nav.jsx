@@ -38,7 +38,7 @@ const Nav = () => {
                         <Link href="/crear-contrato" className="black_btn">
                             Crear Contrato
                         </Link>
-                        <Link href="ver-contrato" className="green_btn">
+                        <Link href="ver-contrato" className="blue_btn">
                             Ver Contrato
                         </Link>
                         <button
@@ -103,6 +103,13 @@ const Nav = () => {
                                     onClick={() => setToggleDropdown(false)}
                                 >
                                     Crear Contrato
+                                </Link>
+                                <Link
+                                    href="/ver-contrato"
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDropdown(false)}
+                                >
+                                    Ver Contrato
                                 </Link>
                                 <button
                                     type="button"

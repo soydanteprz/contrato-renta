@@ -22,9 +22,9 @@ const VerContrato = () => {
     return (
         <div>
             <h1 className="head_text text-center p-10">
-                <span className="green_gradient">Ver Contrato</span>
+                <span className="blue_gradient">Ver Contrato</span>
             </h1>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {allContratos?.map((contrato) => (
                     <div
                         key={contrato.id}
