@@ -5,6 +5,12 @@ const contratoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
+    nombreArrendador: {
+        type: String,
+    },
+    direccionArrendador: {
+        type: String,
+    },
     nombreArrendatario: {
         type: String,
     },
@@ -30,7 +36,11 @@ const contratoSchema = new Schema({
     },
     sexoAval: {
         type: String,
-    }
+    },
+    precio: {
+        type: Number,
+        required: true,
+    },
 });
 
 const Contrato = models.Contrato || model("Contrato", contratoSchema);

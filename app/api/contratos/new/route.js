@@ -3,7 +3,9 @@ import Contrato from "@models/contrato";
 
 
 export const POST = async (req) => {
-    const { userId, 
+    const { userId,
+        nombreArrendador,
+        direccionArrendador,
         nombreArrendatario, 
         direccionArrendatario,
         nombreAval, 
@@ -11,13 +13,16 @@ export const POST = async (req) => {
         FechaInicio, 
         FechaFin,
         sexoArrendatario,
-        sexoAval
+        sexoAval,
+        precio
     } = await req.json();
 
     try {
         await connectToDB();
         const newContrato = new Contrato({
             creator: userId,
+            nombreArrendador,
+            direccionArrendador,
             nombreArrendatario,
             direccionArrendatario,
             nombreAval,
@@ -25,7 +30,8 @@ export const POST = async (req) => {
             FechaInicio,
             FechaFin,
             sexoArrendatario,
-            sexoAval
+            sexoAval,
+            precio
         });
 
         await newContrato.save();

@@ -31,6 +31,12 @@ const VerContrato = () => {
                         className="bg-gray-100 p-4 rounded-lg shadow-md"
                     >
                         <h3 className="text-xl font-bold mb-2">
+                            {contrato.nombreArrendador}
+                        </h3>
+                        <h3 className="mb-2">
+                            {contrato.direccionArrendador}
+                        </h3>
+                        <h3 className="text-xl font-bold mb-2">
                             {contrato.nombreArrendatario}
                         </h3>
                         <h3 className="mb-2">
@@ -52,6 +58,10 @@ const VerContrato = () => {
                         <h3 className="text-lg font-semibold mb-2">
                             Aval: {contrato.sexoAval}
                         </h3>
+                        <h3 className="text-lg font-semibold">
+                            Precio: {contrato.precio}
+                        </h3>
+                        
                         <PDFDownloadLink
                             document={<PDFfile contrato={contrato} />}
                             fileName="contrato.pdf"
