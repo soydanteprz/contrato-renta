@@ -7,6 +7,9 @@ import {
     Font,
 } from "@react-pdf/renderer";
 import React from "react";
+const convert = require("number-to-words");
+const writtenNumber = require("written-number");
+writtenNumber.defaults.lang = "es";
 
 const Recibo = ({
     pageNumber,
@@ -14,6 +17,7 @@ const Recibo = ({
     sexoArrendatario,
     nombreArrendatario,
     direccionArrendatario,
+    precio,
 }) => {
     const date = new Date(FechaInicio);
     const month = date.toLocaleString("es-MX", { month: "long" });
@@ -32,7 +36,11 @@ const Recibo = ({
                 {sexoArrendatario === "Masculino" ? "el C. " : "la C. "}{" "}
                 {nombreArrendatario} la cantidad de{" "}
                 <Text style={styles.textBold}>
-                    $5, 000.00 (CINCO MIL PESOS 00/100 M.N.)
+                    {new Intl.NumberFormat("es-MX", {
+                        style: "currency",
+                        currency: "MXN",
+                    }).format(precio)}{" "}
+                    {writtenNumber(precio).toUpperCase()} PESOS 00/100 M.N.
                 </Text>{" "}
                 por concepto de renta del inmueble ubicado en{" "}
                 <Text style={styles.textBold}>{direccionArrendatario}</Text>{" "}
@@ -174,12 +182,18 @@ const PDFfile = ({ contrato }) => (
                 <Text style={styles.title}>CONTRATO DE ARRENDAMIENTO</Text>
                 <Text style={styles.subtitle}>
                     CONTRATO DE ARRENDAMIENTO QUE CELEBRAN POR UNA PARTE{" "}
-                    <Text style={styles.textBold}>
-                        LA C. ZOILA REFUGIO VASQUEZ RAMIREZ
-                    </Text>{" "}
+                    {contrato.sexoArrendador === "Masculino" ? (
+                        <Text style={styles.textBold}>
+                            EL C. {contrato.nombreArrendador}
+                        </Text>
+                    ) : (
+                        <Text style={styles.textBold}>
+                            LA C. {contrato.nombreArrendador}
+                        </Text>
+                    )}{" "}
                     QUIEN SE LE DENOMINARA EN ADELANTE{" "}
                     <Text style={styles.textBold}>EL ARRENDADOR</Text> Y DE OTRA
-                    PARTE {/* IF SEX IS MALE */}
+                    PARTE{" "}
                     {contrato.sexoArrendatario === "Masculino" ? (
                         <Text style={styles.textBold}>
                             EL C. {contrato.nombreArrendatario}
@@ -250,19 +264,39 @@ const PDFfile = ({ contrato }) => (
                     SEGUNDA.- El arrendatario pagara por concepto de renta la
                     cantidad de{" "}
                     <Text style={styles.textBold}>
-                        $5, 000.00 (CINCO MIL PESOS 00/100 M.N.){" "}
-                    </Text>
+                        {new Intl.NumberFormat("es-MX", {
+                            style: "currency",
+                            currency: "MXN",
+                        }).format(contrato.precio)}{" "}
+                        {writtenNumber(contrato.precio).toUpperCase()} PESOS
+                        00/100 M.N.){" "}
+                    </Text>{" "}
                     mensuales, la cual será pagada por mes cumplido,{" "}
                     <Text style={styles.textBold}>
-                        el día 1 (PRIMERO) de cada mes;
+                        {" "}
+                        el día {new Date(contrato.FechaInicio).getDate()} {"( "}
+                        {writtenNumber(
+                            new Date(contrato.FechaInicio).getDate()
+                        ).toUpperCase()}
+                        {" ) "}de cada mes{" "}
                     </Text>{" "}
                     debiendo llevar a cabo el{" "}
                     <Text style={styles.textBold}>PAGO EN EFECTIVO</Text> de
-                    dicha RENTA, en el domicilio particular de la ARRENDADORA,{" "}
+                    dicha RENTA, en el domicilio particular
+                    {contrato.sexoArrendador === "Masculino" ? (
+                        <Text style={styles.textBold}>
+                            {" "}
+                            del C. {contrato.nombreArrendador}
+                        </Text>
+                    ) : (
+                        <Text style={styles.textBold}>
+                            {" "}
+                            de la C. {contrato.nombreArrendador}
+                        </Text>
+                    )}{" "}
+                    ubicado en{" "}
                     <Text style={styles.textBold}>
-                        ubicado en CALLE HACIENDA DE LOS REYES NÚMERO 143 CIENTO
-                        CUARENTA Y TRES, EN EL FRACCIONAMIENTO LAS TERESAS DE
-                        ESTA CIUDAD.
+                        {contrato.direccionArrendador}
                     </Text>
                 </Text>
                 <Text style={styles.normalText}>
@@ -402,7 +436,12 @@ const PDFfile = ({ contrato }) => (
                     materia del presente contrato; la arrendataria entrega por
                     concepto de depósito a la Arrendadora; la cantidad de{" "}
                     <Text style={styles.textBold}>
-                        $ 5, 000.00 (CINCO MIL PESOS 00/100 M.N.),
+                        {new Intl.NumberFormat("es-MX", {
+                            style: "currency",
+                            currency: "MXN",
+                        }).format(contrato.precio)}{" "}
+                        {writtenNumber(contrato.precio).toUpperCase()} PESOS
+                        00/100 M.N.){" "}
                     </Text>{" "}
                     cantidad equivalente a UN MES DE RENTA; a fin de garantizar
                     la entrega del multicitado inmueble en las mismas
@@ -430,8 +469,7 @@ const PDFfile = ({ contrato }) => (
                 <Text style={styles.normalText}>
                     EL ARRENDADOR:{" "}
                     <Text style={styles.textBold}>
-                        CALLE HACIENDA DE LOS REYES NÚMERO 143 CIENTO CUARENTA Y
-                        TRES, EN EL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD.
+                        {contrato.direccionArrendador}
                     </Text>
                 </Text>
                 <Text style={styles.normalText}>
@@ -444,7 +482,13 @@ const PDFfile = ({ contrato }) => (
                     DÉCIMA NOVENA- Leído por ambas partes el presente contrato
                     lo firman de conformidad, al{" "}
                     <Text style={styles.textBold}>
-                        {" "} {new Date(contrato.FechaInicio).getDate()} de{" "} {new Date(contrato.FechaInicio).toLocaleString("es-MX", { month: "long" })} del{" "} {new Date(contrato.FechaInicio).getFullYear()}
+                        {" "}
+                        {new Date(contrato.FechaInicio).getDate()} de{" "}
+                        {new Date(contrato.FechaInicio).toLocaleString(
+                            "es-MX",
+                            { month: "long" }
+                        )}{" "}
+                        del {new Date(contrato.FechaInicio).getFullYear()}
                     </Text>{" "}
                     en la ciudad de Querétaro Qro., manifestando que no existió
                     dolo, violencia, lesión, o algún otro tipo de vicio en el
@@ -461,7 +505,7 @@ const PDFfile = ({ contrato }) => (
                     _____________________________________
                 </Text>
                 <Text style={styles.signatureText}>
-                    C. Zoila Refugio Vasquez Ramirez
+                    C. {contrato.nombreArrendador}
                 </Text>
                 <Text style={styles.signature}>
                     _____________________________________{" "}
@@ -485,6 +529,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
                 <Recibo
                     pageNumber="2-6"
@@ -498,6 +543,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
             </View>
         </Page>
@@ -515,6 +561,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
                 <Recibo
                     pageNumber="4-6"
@@ -528,6 +575,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
             </View>
         </Page>
@@ -545,6 +593,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
                 <Recibo
                     pageNumber="6-6"
@@ -558,6 +607,7 @@ const PDFfile = ({ contrato }) => (
                     sexoArrendatario={contrato.sexoArrendatario}
                     nombreArrendatario={contrato.nombreArrendatario}
                     direccionArrendatario={contrato.direccionArrendatario}
+                    precio={contrato.precio}
                 />
             </View>
         </Page>

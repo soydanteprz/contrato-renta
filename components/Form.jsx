@@ -1,5 +1,23 @@
 import Link from "next/link";
 
+
+// function six months later from the date received
+function sixMonthsLater(date) {
+    const FechaInicio = new Date(date);
+    const FechaFin = new Date(
+        FechaInicio.getFullYear(),
+        FechaInicio.getMonth() + 6,
+        FechaInicio.getDate()
+    );
+    const year = FechaFin.getFullYear();
+    const month = FechaFin.getMonth() + 1;
+    const day = FechaFin.getDate();
+    const FechaFinString = `${year}-${month < 10 ? `0${month}` : month}-${
+        day < 10 ? `0${day}` : day
+    }`;
+    return FechaFinString;
+}
+
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
     return (
         <section className="flex flex-col items-center justify-center gap-10">
@@ -20,6 +38,57 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             >
                 <div className="flex flex-col gap-3">
                     <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Nombre del Arrendador
+                    </label>
+                    <input
+                        type="text"
+                        name="nombreArrendador"
+                        id="nombreArrendador"
+                        value={post.nombreArrendador}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                nombreArrendador: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    />
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Direccion del Arrendador
+                    </label>
+                    <input
+                        type="text"
+                        name="direccionArrendador"
+                        id="direccionArrendador"
+                        value={post.direccionArrendador}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                direccionArrendador: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    />
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Sexo del Arrendador
+                    </label>
+                    <select
+                        name="sexoArrendador"
+                        id="sexoArrendador"
+                        value={post.sexoArrendador}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                sexoArrendador: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    >
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                    
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Arrendatario
                     </label>
                     <input
@@ -39,7 +108,8 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Direccion del Arrendatario
                     </label>
-                    <select
+                    <input
+                        type="text"
                         name="direccionArrendatario"
                         id="direccionArrendatario"
                         value={post.direccionArrendatario}
@@ -50,21 +120,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                             })
                         }
                         className="form_input"
-                    >
-                        <option>
-                            CALLE HACIENDA TEQUISQUIAPAN NÚMERO 127 INTERIOR B,
-                            DEL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD DE
-                            QUERETARO.
-                        </option>
-                        <option>
-                            CALLE HACIENDA TEQUISQUIAPAN NÚMERO 127 INTERIOR C,
-                            DEL FRACCIONAMIENTO LAS TERESAS DE ESTA CIUDAD DE
-                            QUERETARO.
-                        </option>
-                        <option>
-                            lol
-                        </option>
-                    </select>
+                    />
 
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Sexo del Arrendatario
@@ -127,7 +183,24 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         className="form_input"
                     />
 
+                    {/* six months after FechaInicio */}
                     <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Fecha de Fin
+                    </label>
+                    <input
+                        type="date"
+                        name="FechaFin"
+                        id="FechaFin"
+                        value={Date.parse(sixMonthsLater(post.FechaInicio))}
+                        onChange={(e) =>
+                            setPost({ ...post, FechaFin: e.target.value })
+                        }
+                        className="form_input"
+                    />
+                    
+
+
+                    {/* <label className="font-satoshi font-semibold text-base text-gray-700">
                         Fecha de Fin
                     </label>
                     <input
@@ -139,7 +212,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                             setPost({ ...post, FechaFin: e.target.value })
                         }
                         className="form_input"
-                    />
+                    /> */}
 
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Sexo del Aval
@@ -159,6 +232,20 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                     </select>
+
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Precio
+                    </label>
+                    <input
+                        type="number"
+                        name="precio"
+                        id="precio"
+                        value={post.precio}
+                        onChange={(e) =>
+                            setPost({ ...post, precio: e.target.value })
+                        }
+                        className="form_input"
+                    />
 
                     <div className="flex-end mx-3 mb-5 gap-3">
                         <Link
