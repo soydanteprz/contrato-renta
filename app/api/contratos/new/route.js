@@ -1,20 +1,21 @@
 import { connectToDB } from "@utils/database";
 import Contrato from "@models/contrato";
 
-
 export const POST = async (req) => {
-    const { userId,
+    const {
+        userId,
         nombreArrendador,
         direccionArrendador,
-        nombreArrendatario, 
+        nombreArrendatario,
         direccionArrendatario,
-        nombreAval, 
-        direccionAval, 
-        FechaInicio, 
+        nombreAval,
+        direccionAval,
+        FechaInicio,
         FechaFin,
+        sexoArrendador,
         sexoArrendatario,
         sexoAval,
-        precio
+        precio,
     } = await req.json();
 
     try {
@@ -29,9 +30,10 @@ export const POST = async (req) => {
             direccionAval,
             FechaInicio,
             FechaFin,
+            sexoArrendador,
             sexoArrendatario,
             sexoAval,
-            precio
+            precio,
         });
 
         await newContrato.save();

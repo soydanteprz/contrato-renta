@@ -31,6 +31,9 @@ const contratoSchema = new Schema({
         type: Date,
         required: true,
     },
+    sexoArrendador: {
+        type: String,
+    },
     sexoArrendatario: {
         type: String,
     },

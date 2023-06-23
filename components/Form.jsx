@@ -3,9 +3,19 @@ import Link from "next/link";
 
 // function six months later from the date received
 function sixMonthsLater(date) {
-    var d = new Date(date);
-    d.setMonth(d.getMonth() + 6);
-    return d;
+    const FechaInicio = new Date(date);
+    const FechaFin = new Date(
+        FechaInicio.getFullYear(),
+        FechaInicio.getMonth() + 6,
+        FechaInicio.getDate()
+    );
+    const year = FechaFin.getFullYear();
+    const month = FechaFin.getMonth() + 1;
+    const day = FechaFin.getDate();
+    const FechaFinString = `${year}-${month < 10 ? `0${month}` : month}-${
+        day < 10 ? `0${day}` : day
+    }`;
+    return FechaFinString;
 }
 
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
@@ -59,6 +69,25 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         }
                         className="form_input"
                     />
+                    <label className="font-satoshi font-semibold text-base text-gray-700">
+                        Sexo del Arrendador
+                    </label>
+                    <select
+                        name="sexoArrendador"
+                        id="sexoArrendador"
+                        value={post.sexoArrendador}
+                        onChange={(e) =>
+                            setPost({
+                                ...post,
+                                sexoArrendador: e.target.value,
+                            })
+                        }
+                        className="form_input"
+                    >
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                    
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Arrendatario
                     </label>
@@ -162,12 +191,14 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         type="date"
                         name="FechaFin"
                         id="FechaFin"
-                        value={sixMonthsLater(post.FechaInicio)}
+                        value={Date.parse(sixMonthsLater(post.FechaInicio))}
                         onChange={(e) =>
                             setPost({ ...post, FechaFin: e.target.value })
                         }
                         className="form_input"
                     />
+                    
+
 
                     {/* <label className="font-satoshi font-semibold text-base text-gray-700">
                         Fecha de Fin
