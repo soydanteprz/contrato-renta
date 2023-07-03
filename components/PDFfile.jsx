@@ -40,7 +40,9 @@ const Recibo = ({
                         style: "currency",
                         currency: "MXN",
                     }).format(precio)}{" "}
+                    {"("}
                     {writtenNumber(precio).toUpperCase()} PESOS 00/100 M.N.
+                    {")"}
                 </Text>{" "}
                 por concepto de renta del inmueble ubicado en{" "}
                 <Text style={styles.textBold}>{direccionArrendatario}</Text>{" "}
