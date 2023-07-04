@@ -191,9 +191,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         type="date"
                         name="FechaFin"
                         id="FechaFin"
-                        value={Date.parse(sixMonthsLater(post.FechaInicio))}
+                        value={post.FechaFin}
                         onChange={(e) =>
-                            setPost({ ...post, FechaFin: e.target.value })
+                            setPost({
+                                ...post,
+                                FechaFin: sixMonthsLater(e.target.value),
+                            })
                         }
                         className="form_input"
                     />
