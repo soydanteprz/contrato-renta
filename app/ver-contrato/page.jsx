@@ -5,22 +5,31 @@ import Pagare from "@components/PagarePDF";
 import { PDFDownloadLink, PDFRenderer, PDFViewer } from "@react-pdf/renderer";
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+
+
 
 const VerContrato = () => {
     //fetch data from api
     const [allContratos, setAllContratos] = useState([]);
     const [showPDF, setShowPDF] = useState(false);
     const [showPagare, setShowPagare] = useState(false);
+    const { data: session } = useSession();
+    const [contratos, setContratos] = useState([]);
 
     const getContratos = async () => {
-        const res = await fetch("/api/contratos");
+
+
+        const res = await fetch(`/api/users/${session?.user.id}/contratos`);
         const data = await res.json();
         setAllContratos(data);
     };
 
-    useEffect(() => {
+    if(session?.user.id)
+    {
         getContratos();
-    }, []);
+    }
+
 
     return (
         <div>

@@ -29,7 +29,6 @@ const contratoSchema = new Schema({
     },
     FechaFin: {
         type: Date,
-        required: true,
     },
     sexoArrendador: {
         type: String,

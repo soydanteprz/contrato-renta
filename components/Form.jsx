@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-
+import { useRouter } from "next/router";
 // function six months later from the date received
 function sixMonthsLater(date) {
     const FechaInicio = new Date(date);
@@ -17,6 +16,8 @@ function sixMonthsLater(date) {
     }`;
     return FechaFinString;
 }
+
+
 
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
     return (
@@ -87,7 +88,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                     </select>
-                    
+
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Arrendatario
                     </label>
@@ -200,23 +201,6 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         }
                         className="form_input"
                     />
-                    
-
-
-                    {/* <label className="font-satoshi font-semibold text-base text-gray-700">
-                        Fecha de Fin
-                    </label>
-                    <input
-                        type="date"
-                        name="FechaFin"
-                        id="FechaFin"
-                        value={post.FechaFin}
-                        onChange={(e) =>
-                            setPost({ ...post, FechaFin: e.target.value })
-                        }
-                        className="form_input"
-                    /> */}
-
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Sexo del Aval
                     </label>
