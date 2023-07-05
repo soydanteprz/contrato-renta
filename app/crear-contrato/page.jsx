@@ -8,7 +8,9 @@ import Form from "@components/Form";
 
 import React from "react";
 
+
 const CrearContrato = () => {
+
     const router = useRouter();
     const { data: session } = useSession();
     const [submitting, setSubmitting] = useState(false);
@@ -51,7 +53,7 @@ const CrearContrato = () => {
                 }),
             });
             if (res.ok) {
-                router.push("/"); // redirect to home page
+                router.push("/ver-contrato");
             }
         } catch (error) {
             console.log(error);
