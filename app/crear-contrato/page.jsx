@@ -8,9 +8,7 @@ import Form from "@components/Form";
 
 import React from "react";
 
-
 const CrearContrato = () => {
-
     const router = useRouter();
     const { data: session } = useSession();
     const [submitting, setSubmitting] = useState(false);

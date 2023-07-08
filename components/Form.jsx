@@ -17,8 +17,6 @@ function sixMonthsLater(date) {
     return FechaFinString;
 }
 
-
-
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
     return (
         <section className="flex flex-col items-center justify-center gap-10">
@@ -26,18 +24,16 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                 <span className="blue_gradient">{type}</span>
             </h1>
             <p className="desc text-center mb-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam voluptatum, quibusdam, quia, quae voluptates voluptatem
-                voluptatibus quod quos doloribus quidem voluptate. Quisquam
-                voluptatum, quibusdam, quia, quae voluptates voluptatem
-                voluptatibus quod quos doloribus quidem voluptate.
+                Por favor, rellene todos los campos para poder generar el
+                contrato.
             </p>
 
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-3 w-full max-w-2xl"
+                className="flex flex-wrap gap-5 w-full max-w-2xl text-center align-content-center justify-center"
             >
-                <div className="flex flex-col gap-3">
+                {/* row 1 */}
+                <div className="flex flex-col gap-3 w-full content-center text-center align-content-center md:w-1/3">
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Arrendador
                     </label>
@@ -141,7 +137,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                     </select>
-
+                </div>
+                {/* row 2 */}
+                <div className="flex flex-col gap-3 w-full md:w-1/3">
                     <label className="font-satoshi font-semibold text-base text-gray-700">
                         Nombre del Aval
                     </label>
