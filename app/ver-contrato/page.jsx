@@ -2,7 +2,7 @@
 
 import PDFfile from "@components/PDFfile";
 import Pagare from "@components/PagarePDF";
-import { PDFDownloadLink, PDFRenderer, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -13,9 +13,9 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
-    ChevronDownIcon,
     EllipsisHorizontalCircleIcon,
 } from "@heroicons/react/20/solid";
+import CardContrato from "@components/CardContrato";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -252,9 +252,12 @@ const VerContrato = () => {
                                 </Menu.Items>
                             </Transition>
                         </Menu>
+                        <CardContrato contrato={contrato} />
+
                     </div>
                 ))}
             </div>
+
         </div>
     );
 };
