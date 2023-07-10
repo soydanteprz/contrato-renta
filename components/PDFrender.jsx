@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-const CardContrato = ({ contrato, handleDelete }) => {
+const PDFrender = ({ contrato }) => {
     const [pdf, setPdf] = useState(false);
     const [pagare, setPagare] = useState(false);
     const [pdfFile, setPdfFile] = useState(null);
@@ -58,26 +58,43 @@ const CardContrato = ({ contrato, handleDelete }) => {
                         onClick={handlePdf}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
-                        Contrato
+                        Ver Contrato
                     </button>
                     <button
                         onClick={handlePagare}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
-                        Pagare
-                    </button>
-                    <button
-                        onClick={() => handleDelete(contrato)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        <FontAwesomeIcon icon={faTrash} />
+                        Ver Pagare
                     </button>
                 </div>
+                <div className="px-6 py-4">
+                    <PDFDownloadLink
+                        document={<PDFfile contrato={contrato} />}
+                        fileName="contrato.pdf"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        {({ blob, url, loading, error }) =>
+                            loading ? "Loading document..." : "Download Pdf"
+                        }
+                    </PDFDownloadLink>
+                </div>
+                <div className="px-6 py-4">
+                    <PDFDownloadLink
+
+                        document={<Pagare contrato={contrato} />}
+                        fileName="pagare.pdf"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        {({ blob, url, loading, error }) =>
+                            loading ? "Loading document..." : "Download Pdf"
+                        }
+                    </PDFDownloadLink>
+                </div>
             </div>
-            {pdf ? pdfFile : null}
-            {pagare ? pagareFile : null}
+            {pdf && pdfFile}
+            {pagare && pagareFile}
         </>
     );
 };
 
-export default CardContrato;
+export default PDFrender;
