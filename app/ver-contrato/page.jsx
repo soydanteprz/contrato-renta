@@ -14,6 +14,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalCircleIcon } from "@heroicons/react/20/solid";
 import CardContrato from "@components/CardContrato";
+import PDFrender from "@components/PDFrender";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -26,6 +27,7 @@ const VerContrato = () => {
     const [showPagare, setShowPagare] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
+    const [selectecId, setSelectedId] = useState(null);
 
     useEffect(() => {
         const getContratos = async () => {
@@ -54,22 +56,41 @@ const VerContrato = () => {
         }
     };
 
-    // const getContratos = async () => {
+    const handleContratoById = async (id) => {
+        try {
+            const res = await fetch(`/api/contratos/${id._id.toString()}`);
+            const data = await res.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     return (
-        <div className="container mx-auto">
+        <div>
             <div>
                 <h1 className="head_text text-center p-10">
                     <span className="blue_gradient">Ver Contrato</span>
                 </h1>
             </div>
-            <div className="grid-rows-none grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="lg:grid lg:grid-cols-2 lg:gap-4">
+            <div className="grid-rows-none gap-4 overflow-scroll overflow-x-hidden overflow-y-scroll h-screen">
                 {allContratos?.map((contrato) => (
                     <CardContrato
                         contrato={contrato}
                         handleDelete={handleDelete}
+                        handleClick = {(id) => {
+                            setSelectedId(id);
+
+                        }}
                     />
                 ))}
+            </div>
+            <PDFrender
+                contrato={allContratos}
+                selectecId={selectecId}
+            />
             </div>
         </div>
     );

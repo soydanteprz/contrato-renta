@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-const CardContrato = ({ contrato, handleDelete }) => {
+const CardContrato = ({ contrato, handleDelete, handleClick }) => {
     const [pdf, setPdf] = useState(false);
     const [pagare, setPagare] = useState(false);
     const [pdfFile, setPdfFile] = useState(null);
@@ -33,7 +33,10 @@ const CardContrato = ({ contrato, handleDelete }) => {
 
     return (
         <>
-            <div className="max-w-sm p-6 bg-white rounded-xl shadow-md flex flex-col m-5">
+            <div
+                className="max-w-sm p-6 bg-white rounded-xl shadow-md m-5"
+                onClick={() => handleClick(contrato._id)}
+            >
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">
                         {contrato.nombreArrendador}
@@ -54,18 +57,21 @@ const CardContrato = ({ contrato, handleDelete }) => {
                     </span>
                 </div>
                 <div className="px-6 py-4">
-                    <button
-                        onClick={handlePdf}
+                    <PDFDownloadLink
+                        document={<PDFfile contrato={contrato} />}
+                        fileName="contrato.pdf"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Contrato
-                    </button>
-                    <button
-                        onClick={handlePagare}
+                    </PDFDownloadLink>
+                    <PDFDownloadLink
+                        document={<Pagare contrato={contrato} />}
+                        fileName="pagare.pdf"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2"
                     >
                         Pagare
-                    </button>
+                    </PDFDownloadLink>
+
                     <button
                         onClick={() => handleDelete(contrato)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -74,8 +80,6 @@ const CardContrato = ({ contrato, handleDelete }) => {
                     </button>
                 </div>
             </div>
-            {pdf ? pdfFile : null}
-            {pagare ? pagareFile : null}
         </>
     );
 };
